@@ -18,14 +18,14 @@ namespace Algorithms.BaseDataStruct
         //Console.WriteLine(stack.GetTop());
         //Console.WriteLine(stack.ToString());
 
-
-        public HTStack(){
-        
-        }
         const int stacksize = 10;
         int top = -1;
         T[] stackarray = new T[stacksize];
 
+        public HTStack(){
+            top = -1;
+            Console.Write("构造");
+        }
         public T Pop() {
             if (top == -1) {
                 return default(T);

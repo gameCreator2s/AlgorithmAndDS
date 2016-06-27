@@ -4,3 +4,9 @@ C:\Users\Administrator\documents\visual studio 2012\Projects\Algorithms\Algorith
 C:\Users\Administrator\documents\visual studio 2012\Projects\Algorithms\Algorithms\obj\Debug\Algorithms.csprojResolveAssemblyReference.cache
 C:\Users\Administrator\documents\visual studio 2012\Projects\Algorithms\Algorithms\obj\Debug\Algorithms.exe
 C:\Users\Administrator\documents\visual studio 2012\Projects\Algorithms\Algorithms\obj\Debug\Algorithms.pdb
+E:\alandds\Algorithms\bin\Debug\Algorithms.exe.config
+E:\alandds\Algorithms\obj\Debug\Algorithms.exe
+E:\alandds\Algorithms\obj\Debug\Algorithms.pdb
+E:\alandds\Algorithms\bin\Debug\Algorithms.exe
+E:\alandds\Algorithms\bin\Debug\Algorithms.pdb
+E:\alandds\Algorithms\obj\Debug\Algorithms.csprojResolveAssemblyReference.cache
