@@ -49,6 +49,9 @@ namespace Algorithms.BaseDataStruct
             return stackarray[top];
         }
 
+        public bool IsEmpty() {
+            return top == -1 ? true : false;
+        }
         public override string ToString()
         {
             string temp = "";
