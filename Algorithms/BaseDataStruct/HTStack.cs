@@ -24,7 +24,7 @@ namespace Algorithms.BaseDataStruct
 
         public HTStack(){
             top = -1;
-            Console.Write("构造");
+            //Console.Write("构造");
         }
         public T Pop() {
             if (top == -1) {
