@@ -97,23 +97,20 @@ namespace Algorithms.BaseDataStruct
             HTStack<Node<T>> stack = new HTStack<Node<T>>();
             while (root != null || !stack.IsEmpty()) {
                 while (root != null) {
-                    if (root.identity == 0)
+                    if (root.identity != 2)
                     {
-                        root.identity = 1;
+                        root.identity ++;
                         stack.Push(root);
                         root = root.leftchild;
                     }
-                    else {
-                        Console.WriteLine(root.Data);
-                        root= stack.Pop();
-                    }
+                }
+                while (!stack.IsEmpty() && stack.GetTop().identity == 2) {
+                    root = stack.Pop();
+                    Console.WriteLine(root.Data);
                 }
                 if (!stack.IsEmpty()) {
-                    root = stack.GetTop();
-                    if (root.identity == 0) { 
-                        
-                    }
-                    
+                    stack.GetTop().identity++;
+                    root = stack.GetTop().rightchild;
                 }
             }
         }
