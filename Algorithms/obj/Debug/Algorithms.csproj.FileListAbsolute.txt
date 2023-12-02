@@ -10,3 +10,9 @@ E:\alandds\Algorithms\obj\Debug\Algorithms.pdb
 E:\alandds\Algorithms\bin\Debug\Algorithms.exe
 E:\alandds\Algorithms\bin\Debug\Algorithms.pdb
 E:\alandds\Algorithms\obj\Debug\Algorithms.csprojResolveAssemblyReference.cache
+F:\alDS\AlgorithmAndDS\Algorithms\bin\Debug\Algorithms.exe.config
+F:\alDS\AlgorithmAndDS\Algorithms\bin\Debug\Algorithms.exe
+F:\alDS\AlgorithmAndDS\Algorithms\bin\Debug\Algorithms.pdb
+F:\alDS\AlgorithmAndDS\Algorithms\obj\Debug\Algorithms.csproj.CoreCompileInputs.cache
+F:\alDS\AlgorithmAndDS\Algorithms\obj\Debug\Algorithms.exe
+F:\alDS\AlgorithmAndDS\Algorithms\obj\Debug\Algorithms.pdb

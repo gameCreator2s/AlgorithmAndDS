@@ -41,9 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseDataStruct\AlgorithmUtil.cs" />
     <Compile Include="BaseDataStruct\HTBiTree.cs" />
     <Compile Include="BaseDataStruct\HTQueue.cs" />
     <Compile Include="BaseDataStruct\HTStack.cs" />
+    <Compile Include="BaseDataStruct\SortUtil.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

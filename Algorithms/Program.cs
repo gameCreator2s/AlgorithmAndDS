@@ -15,7 +15,12 @@ namespace Algorithms
             HTBiTree<int> bitree = new HTBiTree<int>(content);
             //bitree.PreOrderTraverse();
             //bitree.InOrderTraverse();
-            bitree.PostOrderTraverse();
+            //bitree.PostOrderTraverse();
+
+            SortUtil sortUtil = new SortUtil();
+            List<int> toSortList = new List<int> { 30,3, 1, 4, 19, 5, 9, 6 ,22};
+            //sortUtil.InsertSort(toSortList);
+            sortUtil.SheelSort(toSortList);
             Console.ReadLine();
         }
     }

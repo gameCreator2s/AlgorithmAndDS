@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace Algorithms.BaseDataStruct
 {
     //binary tree
+    //二叉树
     class HTBiTree<T>
     {
         class Node<T> {
@@ -63,6 +64,10 @@ namespace Algorithms.BaseDataStruct
             PostOrderTraverse(root);
         }
 
+        /// <summary>
+        /// 前序遍历
+        /// </summary>
+        /// <param name="root"></param>
         private void PreOrderTraverse(Node<T> root) {
             if (root == null)
                 return;
@@ -78,6 +83,11 @@ namespace Algorithms.BaseDataStruct
                 }
             }
         }
+
+        /// <summary>
+        /// 中序遍历
+        /// </summary>
+        /// <param name="root"></param>
         private void InOrderTraverse(Node<T> root) {
             HTStack<Node<T>> stack = new HTStack<Node<T>>();
             while (root != null || !stack.IsEmpty()) {
@@ -93,6 +103,10 @@ namespace Algorithms.BaseDataStruct
             }
         }
 
+        /// <summary>
+        /// 后序遍历
+        /// </summary>
+        /// <param name="root"></param>
         private void PostOrderTraverse(Node<T> root) {
             HTStack<Node<T>> stack = new HTStack<Node<T>>();
             while (root != null || !stack.IsEmpty()) {
