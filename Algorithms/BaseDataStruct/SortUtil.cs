@@ -8,19 +8,19 @@ namespace Algorithms.BaseDataStruct
 {
     class SortUtil
     {
-        public void PrintList(List<int> list)
+        public void PrintList(List<int> list,string preFix = "")
         {
-            string content = "";
+            string content = preFix+ "\n";
             for(int i = 0; i < list.Count; i++)
             {
-                content += "," + list[i].ToString();
+                content += (i== 0 ? DateTime.Now.ToString() + "===" + list[i].ToString() : "," + list[i].ToString());
             }
             Console.WriteLine(content);
         }
 
         /// <summary>
-        /// 直接插入排序
-        /// 每次从未排序序列中取出一个元素，然后将它插入到已排序序列中，直到整个序列完全有序
+        /// 插入排序
+        /// 每次从未排序序列中取出一个元素，然后将它插入到已排序序列中，直到整个序列完全有序,是在有序序列里去做比较插入的
         /// </summary>
         public void InsertSort(List<int> originList)
         {
@@ -41,8 +41,7 @@ namespace Algorithms.BaseDataStruct
             //    }
             //    originList[i + 1] = value;
             //}
-            Console.WriteLine("插入前：");
-            PrintList(originList);
+            PrintList(originList, "插入前：");
 
             //理解上面的内容，插入排序即从原始列表里，从第2个值开始不断往之前的序列里插入
             //平均时间复杂度n的平方,如果待排序序列已经有序，插入过程无需遍历寻找插入点，则时间复杂度为n
@@ -52,7 +51,7 @@ namespace Algorithms.BaseDataStruct
             for(int i= 1; i < originList.Count; i++)//待插入部分
             {
                 int toInsertValue = originList[i];
-                for(j = i - 1; j >= 0 ; j--)
+                for(j = i - 1; j >= 0 ; j--)//有序序列部分，待插入值依次跟有序序列里的值比对，更大的后移，否则插入
                 {
                     if (originList[j] > toInsertValue)
                     {
@@ -67,8 +66,7 @@ namespace Algorithms.BaseDataStruct
                 originList[j+1] = toInsertValue;
 
             }
-            Console.WriteLine("插入后：" );
-            PrintList(originList);
+            PrintList(originList, "插入后：");
         }
 
         /// <summary>
@@ -109,30 +107,129 @@ namespace Algorithms.BaseDataStruct
             PrintList(originList);
         }
 
-        public void MaoPaoSort(List<int> orginList, int toCompareCnt)
+        /// <summary>
+        /// 冒泡排序
+        /// 可以从小往大排，也可从大往小排，这里实现前者
+        /// 将整个初始的序列看做是一个无序区，每次选出一个最大值后，即将此最大值加入有序区，直到整个序列有序（此时整个序列都是有序区）
+        /// 每次选出序列中最大的值放到序列最后，重复这个遍历比较的过程，直到有序
+        /// 因为每趟从无序区中选出一个最大值，需要n-1趟，故平均时间复杂度 n的平方
+        /// </summary>
+        /// <param name="originList"></param>
+        public void BubbleSort(List<int> originList)
         {
-            if (toCompareCnt > orginList.Count || toCompareCnt== 0)
+            PrintList(originList);
+            //需要排序的无序列表长度
+            int toSortLen = originList.Count;
+            //int curMaxValue =0;
+
+            int i;
+            while(toSortLen > 1)//最后一个数不用比了，肯定是最小的那个
             {
+                for (i = 0; i < toSortLen -1; i++)//i最大只为 toSortLen -1，第toSortLen个值这趟比较结束后就是这趟最大值了
+                {
+                    if(originList[i]> originList[i + 1])
+                    {
+                        //curMaxValue = originList[i];
+                        int temp = originList[i + 1];
+                        originList[i+1] = originList[i];
+                        originList[i] = temp;
+                    }
+                    //else if (originList[i] < originList[i + 1])
+                    //{
+                    //    curMaxValue = originList[i + 1];
+                    //}
+                }
+                //i这里是比较完了的无序区最大索引(因为上面的for循环是在i== toSortLen -1 时退出的,toSortLen每趟比较下来都要减一)
+                toSortLen = i;
+                //最大值填入这趟得到的有序区第一个位置  冒泡排序是稳定排序，找到了更大的值时交换就已经把对应的值放到对应的位置了，不需要最后这里还设置一次
+                //originList[i] = curMaxValue;
+            }
+            PrintList(originList);
+        }
+
+        /// <summary>
+        /// 快速排序
+        /// 又称为 分区交换排序（ partition-exchange sort ），用到了 分治法 思想，通过对序列进行划分，来降低问题规模. 适用于待排序记录个数很大且原始记录随机排列的情况
+        /// 每趟比较，轴值左侧发现比轴值大的 或者 轴值右侧发现比轴值小的  都与轴值进行交换，更新轴值索引和 交换后的的对应侧索引(左侧索引++,右侧索引--,直到 左右侧索引==轴值索引），然后再对轴值2侧序列递归执行通用的比较步骤，直到各个序列大小为1，整体有序
+        /// 这里的实现是以左右2个序列的比较值来充当轴值的，故只需要让左右2个序列对应值比较直到都移动到轴值处，一趟排序就算结束
+        /// 每趟比较需要遍历 待比较序列大小的次数 n，选定轴值将需要比较的趟数变为logn,故平均时间复杂度为nlogn
+        /// </summary>
+        /// <param name="originList"></param>
+        /// <param name="end">为列表最后一个可读的索引</param>
+        public void QuickSort(List<int> originList,int start,int end)
+        {
+            if(start >= end)
+            {
+                PrintList(originList,"最终列表");
                 return;
             }
-            int startIndex = 0;
+            //左序列索引
+            int i = start;
+            //右序列索引
+            int j = end;
 
-            for (int i = 0; i < toCompareCnt; i++)
+            while (i < j)
             {
-                if(orginList[startIndex]> orginList[i])
+                //此处实现轴值默认选在了start处，故先从右往左比对，此时轴值在i,j不断左移去跟轴值比较
+                //这里面的while也要加上i<j的条件，因为j不断左移，可能>=i,越界了
+                while(i<j && originList[i] <= originList[j])
                 {
-                    int temp = orginList[startIndex];
-                    orginList[startIndex] = orginList[i];
-                    orginList[i] = orginList[startIndex];
-
-                    startIndex = i;
+                    j--;
                 }
-                else
+                if (i < j)//i<j才是需要交换位置，相等的话证明比较结束了
                 {
-                    startIndex = i;
+                    int temp = originList[j];
+                    originList[j] = originList[i];
+                    originList[i] = temp;
+                    i++;
+                }
+
+                //从左往右,此时轴值在j，i不断右移去跟轴值比较
+                while(i<j && originList[i] <= originList[j])
+                {
+                    i++;
+                }
+                if (i < j)
+                {
+                    int temp = originList[j];
+                    originList[j] = originList[i];
+                    originList[i] = temp;
+                    j--;
                 }
             }
-
+            //Console.WriteLine("固定轴：" + i + "===" + originList[i]);
+            //PrintList(originList);
+            //左侧递归
+            QuickSort(originList, start, i-1);
+            //右侧递归
+            QuickSort(originList, j+1, end);
         }
+
+        /// <summary>
+        /// 选择排序
+        /// 将待排序序列划分成有序和无序区，每趟在无序序列里每次选出一个最小值，插入有序序列中
+        /// 平均时间复杂度n的平方
+        /// </summary>
+        /// <param name="originList"></param>
+        public void SelectSort(List<int> originList)
+        {
+            //有序区每趟插入新的值的插入点
+            int toInsertIndex = 0;
+            while (toInsertIndex < originList.Count)
+            {
+                for (int i = toInsertIndex; i < originList.Count; i++)
+                {
+                    if (originList[toInsertIndex] > originList[i])
+                    {
+                        int temp = originList[i];
+                        originList[i] = originList[toInsertIndex];
+                        originList[toInsertIndex] = temp;
+                    }
+                }
+                toInsertIndex++;
+            }
+            PrintList(originList, "最终列表:");
+        }
+
     }
 }

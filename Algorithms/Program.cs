@@ -18,9 +18,12 @@ namespace Algorithms
             //bitree.PostOrderTraverse();
 
             SortUtil sortUtil = new SortUtil();
-            List<int> toSortList = new List<int> { 30,3, 1, 4, 19, 5, 9, 6 ,22};
+            List<int> toSortList = new List<int> { 30,3, 1, 4,19, 19, 5, 9, 6 ,22};
             //sortUtil.InsertSort(toSortList);
-            sortUtil.SheelSort(toSortList);
+            //sortUtil.SheelSort(toSortList);
+            //sortUtil.BubbleSort(toSortList);
+            //sortUtil.QuickSort(toSortList, 0, toSortList.Count - 1);
+            sortUtil.SelectSort(toSortList);
             Console.ReadLine();
         }
     }
