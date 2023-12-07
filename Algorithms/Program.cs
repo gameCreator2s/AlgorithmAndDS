@@ -23,7 +23,8 @@ namespace Algorithms
             //sortUtil.SheelSort(toSortList);
             //sortUtil.BubbleSort(toSortList);
             //sortUtil.QuickSort(toSortList, 0, toSortList.Count - 1);
-            sortUtil.SelectSort(toSortList);
+            //sortUtil.SelectSort(toSortList);
+            sortUtil.MergeSort(toSortList);
             Console.ReadLine();
         }
     }

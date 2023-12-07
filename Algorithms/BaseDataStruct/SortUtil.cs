@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace Algorithms.BaseDataStruct
 {
+    /// <summary>
+    /// 排序相关算法
+    /// 里面关于需要传递序列起始终点索引的，都是传递有效索引，比如长度为3的序列，起始为0，终点为2
+    /// </summary>
     class SortUtil
     {
         public void PrintList(List<int> list,string preFix = "")
@@ -16,6 +20,15 @@ namespace Algorithms.BaseDataStruct
                 content += (i== 0 ? DateTime.Now.ToString() + "===" + list[i].ToString() : "," + list[i].ToString());
             }
             Console.WriteLine(content);
+        }
+
+        public long PrintTimeStamp(string title = "时间戳:",bool toMS =true)
+        {
+            long TO_MS = 10000;
+            long TO_SEC = 10000000;
+            var time = DateTime.Now.Ticks / TO_MS;
+            Console.WriteLine(title + "\n" + time.ToString());
+            return time;
         }
 
         /// <summary>
@@ -229,6 +242,125 @@ namespace Algorithms.BaseDataStruct
                 toInsertIndex++;
             }
             PrintList(originList, "最终列表:");
+        }
+
+        /// <summary>
+        /// 堆排序
+        /// 简单选择排序的改进。将待排序的记录序列构造成一个堆（假设用大根堆实现），此时，选出了堆中所有记录的最大者即堆顶记录。
+        /// 移走堆顶记录，将剩余的记录调整成堆，找出次大记录。以此类推，直到堆中只有一个记录为止。
+        /// 从一个无序序列建堆的过程就是一个反复筛选的过程。因为此序列就是一个完全二叉树的顺序存储，则所有的叶子结点都已经是堆。
+        /// 所以只需从第n/2个记录(即最后一个分支结点)开始，执行上述筛选过程，直到根结点。
+        /// 堆排序传递进来的数组看做是无序的序列，且此序列是完全二叉树的层序存储序列
+        /// 平均时间复杂度 nlogn
+        /// </summary>
+        /// <param name="originList"></param>
+        public void HeapSort(List<int> originList)
+        {
+
+        }
+
+        /// <summary>
+        /// 归并排序
+        /// 也是采用分治法，将若干个有序序列进行两两归并，直至所有待排序记录都在一个有序序列为止
+        /// 为了达到将若干有序序列俩俩归并，需要将初始待排序序列进行划分
+        /// （分治法，分解成多个子问题，子问题规模更小，解决难度更低，各个子问题解决后再合并解决最初的问题），从每个序列都只有1个数据记录开始合并
+        /// 因为一个序列只有一个数据的话则默认就有序了
+        /// 对这些原子序列俩俩合并（即递归调用归并排序)直到序列有序),这里划分不是一定要真的对序列划分成物理上的多个子序列而是通过索引范围在原序列上操作
+        /// 需要用一个跟待排序序列相同大小的列表作为临时空间存放排序的中间结果
+        /// 平均时间复杂度 nlogn
+        /// </summary>
+        /// <param name="originList"></param>
+        public void MergeSort(List<int> originList)
+        {
+            PrintList(originList);
+            List<int> tempList = new List<int>(originList);
+            //子序列划分粒度
+            int subListLen = 1;
+            while(subListLen < originList.Count)//最多拆到2个序列，2个序列合并完就结束了
+            {
+                MergeSortTraverse(originList,tempList, subListLen);
+            PrintList(tempList);
+                subListLen *= 2;
+            }
+            originList = tempList;
+            PrintList(originList);
+        }
+
+        /// <summary>
+        /// 按照给定的 子序列长度，遍历合并处理各个子序列
+        /// </summary>
+        public void MergeSortTraverse(List<int> originList,List<int> tempList,int subListLen)
+        {
+            int originListCount = originList.Count;
+            int index = 0;
+            //每次循环需要处理2个长度为subListLen的子序列，index表示2个待合并连续子序列的起始索引，故index最大只能为 originListCount - 2 * subListLen
+            //注意最后一个序列可能不够subListLen长度
+            while (index<= originListCount - 2 * subListLen)
+            {
+                MergeSortToMerge(originList, tempList, index, index + subListLen,index +2 * subListLen - 1);
+                //下2个序列的起始索引
+                index += 2 * subListLen;
+            }
+            //最后一个序列长度不够subListLen(注意这里不能等于，否则就把只剩一个序列的情况也包含了,只剩一个不能通过toMerge合并)
+            if(index < originListCount - subListLen)
+            {
+                MergeSortToMerge(originList, tempList, index, index + subListLen,originListCount - 1);
+            }
+            else//只剩一个序列，直接合入
+            {
+                for(int k = index; k < originListCount; k++)
+                {
+                    tempList[k] = originList[k];
+                }
+            }
+            PrintList(tempList, "temp:::");
+        }
+
+        /// <summary>
+        /// 归并排序的归并
+        /// 用于将原始序列中指定范围的2个有序序列合并
+        /// 这里只做合并 ，不对范围做合法判断
+        /// </summary>
+        /// <param name="originList"></param>
+        /// <param name="firstStart">2个待合并序列在原序列中的起始索引</param>
+        /// <param name="secondStart">第2个待合并序列在原序列中的起始索引</param>
+        /// <param name="secondEnd">第2个待合并序列在原序列中的结束索引</param>
+        public void MergeSortToMerge(List<int> originList,List<int> tempList,int firstStart,int secondStart,int secondEnd)
+        {
+            //待合并的第一个序列起始索引
+            int firstListIndex = firstStart;
+            //待合并的第二个序列起始索引
+            int secondListIndex = secondStart;
+            //合入临时序列的起始索引
+            int mergeIndex = firstStart;
+            
+            while(firstListIndex <= secondStart - 1 && secondListIndex <= secondEnd)
+            {
+                if(originList[firstListIndex] < originList[secondListIndex])
+                {
+                    tempList[mergeIndex++] = originList[firstListIndex++];
+                }
+                else
+                {
+                    tempList[mergeIndex++] = originList[secondListIndex++];
+                }
+            }
+
+            //第二个序列合完了，第一个直接合到后面
+            if(firstListIndex <= secondStart - 1)
+            {
+                for (int k = firstListIndex; k < secondStart; k++)
+                {
+                    tempList[k] = originList[k];
+                }
+            }
+            else//第一个序列合完了，第二个直接合到后面
+            {
+                for (int k = secondListIndex; k <= secondEnd; k++)
+                {
+                    tempList[k] = originList[k];
+                }
+            }
         }
 
     }
